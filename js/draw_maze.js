@@ -1,5 +1,4 @@
 export const drawMaze = (grid, ctx) => {
-
   const cellSize = ctx.canvas.height / grid.length;
   let xStart, yStart;
   let xEnd, yEnd;
@@ -11,7 +10,7 @@ export const drawMaze = (grid, ctx) => {
       cell.forEach(wall => {
         xStart = cellSize * colIdx;
         yStart = cellSize * rowIdx;
-        // debugger;
+
         switch(wall) {
           case 'n':
           yEnd = yStart;
@@ -42,64 +41,6 @@ export const drawMaze = (grid, ctx) => {
   ctx.strokeStyle = "black";
   ctx.stroke();
 };
-
-// export const drawMaze = (grid, ctx) => {
-//
-//   const cellSize = ctx.canvas.height / grid.length;
-//   let xStart, yStart;
-//   let xEnd, yEnd;
-//   // let drawn;
-//
-//   // ctx.beginPath();
-//
-//   grid.forEach((row, rowIdx) => {
-//     row.forEach((cell, colIdx) => {
-//       cell.forEach(wall => {
-//         xStart = cellSize * colIdx;
-//         yStart = cellSize * rowIdx;
-//         // drawn = false;
-//         // debugger;
-//         switch(wall) {
-//           case 'n':
-//           yEnd = yStart;
-//           xEnd = xStart + cellSize;
-//           break;
-//           case 's':
-//           yStart += cellSize;
-//
-//           yEnd = yStart;
-//           xEnd = xStart + cellSize;
-//           break;
-//           case 'w':
-//           xEnd = xStart;
-//           yEnd = yStart + cellSize;
-//           break;
-//           case 'e':
-//           xStart += cellSize;
-//
-//           xEnd = xStart;
-//           yEnd = yStart + cellSize;
-//           break;
-//         }
-//
-//         setTimeout(() => draw(xStart, yStart, xEnd, yEnd, ctx), 10);
-//       });
-//     });
-//   });
-//   // ctx.strokeStyle = "black";
-//   // ctx.stroke();
-// };
-//
-// const draw = (xStart, yStart, xEnd, yEnd, ctx) => {
-//   debugger;
-//   ctx.beginPath();
-//   ctx.moveTo(xStart, yStart);
-//   ctx.lineTo(xEnd, yEnd);
-//   ctx.strokeStyle = "black";
-//   ctx.stroke();
-// };
-//
-
 
 export const mapCellsToWalls = grid => {
   const directions = ['n', 's', 'w', 'e'];
