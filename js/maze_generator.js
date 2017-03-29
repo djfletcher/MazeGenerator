@@ -1,9 +1,10 @@
-import createMaze from './algorithm';
+// import createMaze from './algorithm';
 import { drawMaze, mapCellsToWalls } from './draw_maze';
 // import { mapCellsToWalls } from './draw_maze';
 // import { drawMaze, animate } from './animate_maze_build';
 // import { drawCircle, moveCircle } from './player';
 import Circle from './player';
+import Maze from './maze';
 
 
 // window.addEventListener('keydown',doKeyDown,true);
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.height = 500;
   const ctx = canvas.getContext('2d');
 
-  const maze = createMaze(10);
+  // const maze = createMaze(10);
   // drawMaze(mapCellsToWalls(maze), ctx);
   createAndDrawMaze(10);
   buttonsListening();
@@ -37,7 +38,7 @@ const createAndDrawMaze = difficulty => {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const maze = createMaze(difficulty);
+  const maze = new Maze(difficulty).createMaze();
   drawMaze(mapCellsToWalls(maze), ctx);
 };
 
