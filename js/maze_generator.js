@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.height = 500;
   const ctx = canvas.getContext('2d');
 
-  const size = 50;
-  const maze = createMaze(size);
+  const difficulty = 50;
+  const maze = createMaze(difficulty);
 
   drawMaze(mapCellsToWalls(maze), ctx);
 });
