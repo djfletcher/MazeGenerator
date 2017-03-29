@@ -1,5 +1,5 @@
 // Allow the maze to be customized via size parameters
-export const createGrid = (rows, cols) => {
+const createGrid = (rows, cols) => {
   const grid = [];
   for (let i = 0; i < rows; i++) {
     grid[i] = new Array(cols).fill(0);
@@ -30,7 +30,7 @@ const shuffle = array => {
 };
 
 // The recursive backtracking algorithm
-export const carvePassagesFrom = (cx, cy, grid) => {
+const carvePassagesFrom = (cx, cy, grid) => {
   const directions = shuffle(['n', 's', 'e', 'w']);
   let nx, ny;
 
@@ -53,3 +53,12 @@ export const carvePassagesFrom = (cx, cy, grid) => {
     }
   });
 };
+
+// Create the maze and return it, according to size params
+const createMaze = size => {
+  const grid = createGrid(size, size);
+  carvePassagesFrom(0, 0, grid);
+  return grid;
+};
+
+export default createMaze;

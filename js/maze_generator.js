@@ -1,28 +1,14 @@
-import { createGrid, carvePassagesFrom } from './algorithm';
-import { drawGrid, getCoordinates, drawMaze, locateCells, mapCellsToWalls } from './draw_maze';
-
+import createMaze from './algorithm';
+import { drawMaze, mapCellsToWalls } from './draw_maze';
 
 document.addEventListener("DOMContentLoaded", () => {
-  // window.setup = setup;
-  // window.draw = draw;
-
   const canvas = document.getElementById('canvas');
   canvas.width = 500;
   canvas.height = 500;
-
   const ctx = canvas.getContext('2d');
 
-  const grid = createGrid(5, 5);
-  carvePassagesFrom(0, 0, grid);
-  // console.log(grid);
-  // drawGrid(cWidth, cHeight, ctx);
+  const size = 50;
+  const maze = createMaze(size);
 
-  // const coords = getCoordinates(grid);
-
-  // drawMaze(ctx, coords);
-  // locateCells(grid, ctx);
-  console.log(grid);
-  const newGrid = mapCellsToWalls(grid);
-  console.log(newGrid);
-  drawMaze(newGrid, ctx);
+  drawMaze(mapCellsToWalls(maze), ctx);
 });

@@ -1,5 +1,6 @@
 export const drawMaze = (grid, ctx) => {
-  const cellSize = 100;
+
+  const cellSize = ctx.canvas.height / grid.length;
   let xStart, yStart;
   let xEnd, yEnd;
 
