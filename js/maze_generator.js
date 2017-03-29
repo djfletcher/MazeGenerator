@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const grid = createGrid(5, 5);
   carvePassagesFrom(0, 0, grid);
   // console.log(grid);
-  drawGrid(cWidth, cHeight, ctx);
+  // drawGrid(cWidth, cHeight, ctx);
 
   // const coords = getCoordinates(grid);
 
@@ -28,4 +28,5 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log(grid);
   const newGrid = mapCellsToWalls(grid);
   console.log(newGrid);
+  drawMaze(newGrid, ctx);
 });
