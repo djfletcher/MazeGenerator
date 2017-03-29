@@ -1,3 +1,8 @@
+#main {
+  display: flex;
+  align-items: flex-start;
+}
+
 body {
   background: lightblue;
 }
@@ -6,4 +11,20 @@ canvas {
   background: white;
   margin: 20px;
   border: 1px solid gray;
+}
+
+.difficulty-buttons {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.difficulty-buttons > li {
+  margin: 10px 0;
+}
+
+.difficulty-buttons button {
+  width: 100px;
+  height: 30px;
+  border-radius: 4px;
 }
