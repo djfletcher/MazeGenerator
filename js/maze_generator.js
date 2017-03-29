@@ -1,5 +1,5 @@
 import { createGrid, carvePassagesFrom } from './algorithm';
-import { drawGrid, getCoordinates, drawMaze } from './draw_maze';
+import { drawGrid, getCoordinates, drawMaze, locateCells, mapCellsToWalls } from './draw_maze';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,11 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.height = cHeight;
 
   const ctx = canvas.getContext('2d');
-  drawGrid(cWidth, cHeight, ctx);
 
   const grid = createGrid(5, 5);
   carvePassagesFrom(0, 0, grid);
-  const coords = getCoordinates(grid);
+  // console.log(grid);
+  drawGrid(cWidth, cHeight, ctx);
 
-  drawMaze(ctx, coords);
+  // const coords = getCoordinates(grid);
+
+  // drawMaze(ctx, coords);
+  // locateCells(grid, ctx);
+  console.log(grid);
+  const newGrid = mapCellsToWalls(grid);
+  console.log(newGrid);
 });
