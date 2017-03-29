@@ -11,24 +11,28 @@ export const drawMaze = (grid, ctx) => {
       cell.forEach(wall => {
         xStart = cellSize * colIdx;
         yStart = cellSize * rowIdx;
-
+        // debugger;
         switch(wall) {
           case 'n':
           yEnd = yStart;
           xEnd = xStart + cellSize;
+          break;
           case 's':
           yStart += cellSize;
 
           yEnd = yStart;
           xEnd = xStart + cellSize;
+          break;
           case 'w':
           xEnd = xStart;
           yEnd = yStart + cellSize;
+          break;
           case 'e':
           xStart += cellSize;
 
           xEnd = xStart;
           yEnd = yStart + cellSize;
+          break;
         }
         ctx.moveTo(xStart, yStart);
         ctx.lineTo(xEnd, yEnd);

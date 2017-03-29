@@ -6,13 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // window.setup = setup;
   // window.draw = draw;
 
-  // canvas width and height
-  const cWidth = 500;
-  const cHeight = 500;
-
   const canvas = document.getElementById('canvas');
-  canvas.width = cWidth;
-  canvas.height = cHeight;
+  canvas.width = 500;
+  canvas.height = 500;
 
   const ctx = canvas.getContext('2d');
 
