@@ -34,17 +34,11 @@ class Player {
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
     ctx.fillStyle = 'red';
     ctx.fill();
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
+    // ctx.strokeStyle = 'blue';
+    // ctx.stroke();
   }
 
   validNextMove(movement) {
-
-    // Flag to put variables back if we hit an edge of the board.
-    let valid = true;
-
-    const width = this.ctx.canvas.width;
-    const height = this.ctx.canvas.height;
     const next = {
       north: this.y + movement.dy - this.r,
       south: this.y + movement.dy + this.r,
@@ -52,14 +46,38 @@ class Player {
       east: this.x + movement.dx + this.r
     };
 
+    return this.onCanvas(next) && this.noCollision(next);
+    // return this.onCanvas(next);
+  }
+
+  onCanvas(next) {
+    let valid = true;
+
+    const width = this.ctx.canvas.width;
+    const height = this.ctx.canvas.height;
+
     // if next move will be off board
     if (next.north < 0 || next.south > height) { valid = false; }
     if (next.west < 0 || next.east > width) { valid = false; }
 
     return valid;
-    // collideTest();
   }
 
+  noCollision(next) {
+    let valid = true;
+    const breadth = this.r * 2;
+    const imgData = this.ctx.getImageData(next.west, next.north, breadth, breadth);
+    // debugger;
+    for (let i = 0; i < imgData.data.length; i++) {
+      if (imgData.data[i] == 0) {
+        valid = false;
+        alert("black!");
+        break;
+      }
+    }
+
+    return valid;
+  }
 }
 
 export default Player;

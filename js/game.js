@@ -9,9 +9,9 @@ class Game {
 
     this.maze = new Maze(difficulty, this.ctx);
 
-    const x = this.canvas.width / 2;
-    const y = this.canvas.height / 2;
     const r = this.getPlayerSize(difficulty);
+    const x = r * 2;
+    const y = r * 2;
     this.player = new Player(x, y, r, this.ctx);
 
     this.bindKeys();
