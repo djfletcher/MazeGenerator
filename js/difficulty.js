@@ -1,4 +1,4 @@
-import { createAndDrawMaze } from './maze_generator';
+import Game from './game';
 
 export const buttonsListening = () => {
   const easy = document.getElementById("easy");
@@ -24,5 +24,6 @@ export const buttonsListening = () => {
 };
 
 const changeDifficulty = difficulty => {
-  createAndDrawMaze(difficulty);
+  const game = new Game(difficulty);
+  game.setUpGame();
 };

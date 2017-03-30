@@ -1,4 +1,4 @@
-class Circle {
+class Player {
   constructor(x, y, r, ctx) {
     this.x = x;
     this.y = y;
@@ -33,4 +33,4 @@ class Circle {
   }
 }
 
-export default Circle;
+export default Player;
