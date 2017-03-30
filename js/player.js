@@ -12,27 +12,29 @@ class Circle {
       right: { dx: 5, dy: 0 }
     };
 
-    this.bindKeys();
+    // this.bindKeys();
     this.moveCircle = this.moveCircle.bind(this);
     this.drawCircle = this.drawCircle.bind(this);
   }
-
-  bindKeys() {
-    window.key('up', this.moveCircle.bind(this));
-    window.key('down', this.moveCircle.bind(this));
-    window.key('left', this.moveCircle.bind(this));
-    window.key('right', this.moveCircle.bind(this));
-  }
+  //
+  // bindKeys() {
+  //   window.key('up', this.moveCircle.bind(this));
+  //   window.key('down', this.moveCircle.bind(this));
+  //   window.key('left', this.moveCircle.bind(this));
+  //   window.key('right', this.moveCircle.bind(this));
+  // }
 
   moveCircle(e, handler) {
+    // debugger;
     const movement = this.movements[handler.shortcut];
     this.x = this.x + movement.dx;
     this.y = this.y + movement.dy;
-    this.drawCircle();
+    // this.drawCircle();
   }
 
   drawCircle() {
     const [x, y, r, ctx] = [this.x, this.y, this.r, this.ctx];
+    // debugger;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
     ctx.fillStyle = 'green';
