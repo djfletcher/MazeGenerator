@@ -46,8 +46,8 @@ class Player {
       east: this.x + movement.dx + this.r
     };
 
-    return this.onCanvas(next) && this.noCollision(next);
-    // return this.onCanvas(next);
+    // return this.onCanvas(next) && this.noCollision(next);
+    return this.onCanvas(next);
   }
 
   onCanvas(next) {
@@ -63,21 +63,21 @@ class Player {
     return valid;
   }
 
-  noCollision(next) {
-    let valid = true;
-    const breadth = this.r * 2;
-    const imgData = this.ctx.getImageData(next.west, next.north, breadth, breadth);
-    // debugger;
-    for (let i = 0; i < imgData.data.length; i++) {
-      if (imgData.data[i] == 0) {
-        valid = false;
-        alert("black!");
-        break;
-      }
-    }
-
-    return valid;
-  }
+  // noCollision(next) {
+  //   let valid = true;
+  //   const breadth = this.r * 2;
+  //   const imgData = this.ctx.getImageData(next.west, next.north, breadth, breadth);
+  //   // debugger;
+  //   for (let i = 0; i < imgData.data.length; i++) {
+  //     if (imgData.data[i] == 0) {
+  //       valid = false;
+  //       alert("black!");
+  //       break;
+  //     }
+  //   }
+  //
+  //   return valid;
+  // }
 }
 
 export default Player;

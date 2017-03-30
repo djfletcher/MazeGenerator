@@ -15,7 +15,7 @@ export const buttonsListening = () => {
   });
 
   hard.addEventListener("click", () => {
-    changeDifficulty(30);
+    changeDifficulty(25);
   });
 
   insane.addEventListener("click", () => {

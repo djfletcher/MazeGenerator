@@ -1,6 +1,5 @@
 import Player from './player';
 import Maze from './maze';
-// import { drawMaze, mapCellsToWalls } from './draw_maze';
 
 class Game {
   constructor(difficulty) {

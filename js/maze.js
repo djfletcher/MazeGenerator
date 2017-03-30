@@ -4,6 +4,9 @@ class Maze {
     this.ctx = ctx;
     this.grid = this.createGrid();
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
+
+    this.wallPixelsSaved = false;
+    this.wallPixels = Array(ctx.canvas.width + 1).fill(Array(ctx.canvas.height + 1));
   }
 
   // Allow the maze to be customized via size parameters
@@ -112,6 +115,9 @@ class Maze {
     this.wallsCollection.forEach((row, rowIdx) => {
       row.forEach((cell, colIdx) => {
         cell.forEach(wall => {
+          let vertical;
+          let horizontal;
+
           xStart = cellSize * colIdx;
           yStart = cellSize * rowIdx;
 
@@ -119,24 +125,49 @@ class Maze {
             case 'n':
             yEnd = yStart;
             xEnd = xStart + cellSize;
+
+            horizontal = true;
+            // this.makeVirtualRepresentation({ xStart, xEnd });
             break;
             case 's':
             yStart += cellSize;
 
             yEnd = yStart;
             xEnd = xStart + cellSize;
+
+            horizontal = true;
             break;
             case 'w':
             xEnd = xStart;
             yEnd = yStart + cellSize;
+
+            vertical = true;
             break;
             case 'e':
             xStart += cellSize;
 
             xEnd = xStart;
             yEnd = yStart + cellSize;
+
+            vertical = true;
             break;
           }
+
+          // The first time through, save reference to pixels where walls are located
+          if (!this.wallPixelsSaved) {
+            if (vertical) {
+              for (let y = yStart; y < yEnd; y++) {
+                this.wallPixels[xStart][y] = true;
+                // if (y < 0 || y >= this.wallPixels.length) { debugger; }
+              }
+            } else if (horizontal) {
+              for (let x = xStart; x < xEnd; x++) {
+                this.wallPixels[x][yStart] = true;
+                // if (x < 0 || x >= this.wallPixels.length) { debugger; }
+              }
+            }
+          }
+
           this.ctx.moveTo(xStart, yStart);
           this.ctx.lineTo(xEnd, yEnd);
         });
@@ -144,6 +175,7 @@ class Maze {
     });
     this.ctx.strokeStyle = "black";
     this.ctx.stroke();
+    this.wallPixelsSaved = true;
   }
 }
 
