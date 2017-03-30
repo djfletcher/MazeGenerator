@@ -4,9 +4,6 @@ class Maze {
     this.ctx = ctx;
     this.grid = this.createGrid();
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
-    // this.mapCellsToWalls = this.mapCellsToWalls.bind(this);
-    // this.wallsCollection = this.mapCellsToWalls();
-    // debugger;
   }
 
   // Allow the maze to be customized via size parameters
@@ -21,7 +18,6 @@ class Maze {
 
   createMaze() {
     this.carvePassagesFrom(0, 0, this.grid);
-    // return this.grid;
   }
 
   // Implementation of the Fisher-Yates Shuffle for randomized directions
