@@ -28,9 +28,10 @@ class Player {
     const [x, y, r, ctx] = [this.x, this.y, this.r, this.ctx];
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'rgb(171, 70, 67)';
     ctx.fill();
-    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgb(65, 67, 82)';
     ctx.stroke();
   }
 

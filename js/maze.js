@@ -163,7 +163,8 @@ class Maze {
         });
       });
     });
-    this.ctx.strokeStyle = "black";
+    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = 'rgb(65, 67, 82)';
     this.ctx.stroke();
     this.drawFinishLine();
   }

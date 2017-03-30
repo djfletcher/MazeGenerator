@@ -4,13 +4,13 @@
 }
 
 body {
-  background: lightblue;
+  background-color: rgb(138, 179, 196);
 }
 
 canvas {
-  background: white;
+  background-color: rgb(253, 244, 229);
   margin: 20px;
-  border: 1px solid gray;
+  border: 1px solid rgb(176, 171, 166);
 }
 
 .difficulty-buttons {
