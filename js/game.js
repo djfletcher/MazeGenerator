@@ -20,6 +20,7 @@ class Game {
   }
 
   setUpGame(difficulty) {
+    // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.createMaze();
     this.finishLine = this.maze.finishLine;
     this.player.mazeWalls = this.maze.mapCellsToWalls();
@@ -31,6 +32,7 @@ class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
     this.player.drawCircle();
+    this.player.trail.drawTail();
     if (this.won()) {
       this.unbindKeys();
       window.setTimeout(() => changeDifficulty(this.difficulty), 1000);

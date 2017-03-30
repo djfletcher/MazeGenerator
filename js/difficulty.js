@@ -19,6 +19,7 @@ export const buttonsListening = () => {
   });
 
   insane.addEventListener("click", () => {
+    // changeDifficulty(45);
     changeDifficulty(50);
   });
 };
@@ -27,3 +28,11 @@ export const changeDifficulty = difficulty => {
   const game = new Game(difficulty);
   game.setUpGame();
 };
+
+
+// some ruby to calc even divisors of each canvas width/height for difficulty levels
+// def factors (num)
+//  f = []
+//  (2..num).each {|n| f << n if num % n == 0 }
+//  return f
+// end

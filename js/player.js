@@ -1,9 +1,12 @@
+import Trail from './trail';
+
 class Player {
   constructor(x, y, r, ctx) {
     this.x = x;
     this.y = y;
     this.r = r;
     this.ctx = ctx;
+    this.trail = new Trail(x, y, ctx);
 
     this.row = 0;
     this.col = 0;
@@ -38,6 +41,8 @@ class Player {
       this.y = this.y + movement.dy;
       this.row = this.row + movement.dRow;
       this.col = this.col + movement.dCol;
+
+      this.trail.drag(this.x, this.y);
     }
   }
 
