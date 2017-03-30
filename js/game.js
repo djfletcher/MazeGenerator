@@ -1,16 +1,19 @@
 import Player from './player';
 import Maze from './maze';
+import { changeDifficulty } from './difficulty';
 
 class Game {
   constructor(difficulty) {
+    this.difficulty = difficulty;
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
+    this.cellSize = this.canvas.height / difficulty;
 
     this.maze = new Maze(difficulty, this.ctx);
 
-    const r = this.getPlayerSize(difficulty);
-    const x = r * 2;
-    const y = r * 2;
+    const r = (this.cellSize - 2) / 2;
+    const x = r + 1;
+    const y = r + 1;
     this.player = new Player(x, y, r, this.ctx);
 
     this.bindKeys();
@@ -18,7 +21,8 @@ class Game {
 
   setUpGame(difficulty) {
     this.maze.createMaze();
-    this.maze.mapCellsToWalls();
+    this.finishLine = this.maze.finishLine;
+    this.player.mazeWalls = this.maze.mapCellsToWalls();
     this.draw();
   }
 
@@ -26,29 +30,24 @@ class Game {
     if (e) { this.player.moveCircle(e, handler); }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
-
-    this.player.trackWalls(this.maze.wallMidpoints);
     this.player.drawCircle();
-  }
-
-  getPlayerSize(difficulty) {
-    switch(difficulty) {
-      case 5:
-        return 30;
-      case 10:
-        return 15;
-      case 30:
-        return 5;
-      case 50:
-        return 2;
+    if (this.won()) {
+      this.unbindKeys();
+      window.setTimeout(() => changeDifficulty(this.difficulty), 1000);
     }
   }
 
+  won() {
+    return (this.player.row === this.maze.finishLine.row &&
+            this.player.col === this.maze.finishLine.col);
+  }
+
   bindKeys() {
-    window.key('up', this.draw.bind(this));
-    window.key('down', this.draw.bind(this));
-    window.key('left', this.draw.bind(this));
-    window.key('right', this.draw.bind(this));
+    window.key('up, down, left, right', this.draw.bind(this));
+  }
+
+  unbindKeys() {
+    window.key.unbind('up, down, left, right');
   }
 }
 

@@ -1,20 +1,19 @@
-import { times, cloneDeep } from 'lodash';
-
 class Maze {
   constructor(difficulty, ctx) {
     this.difficulty = difficulty;
+    this.cellSize = ctx.canvas.height / difficulty;
+
     this.ctx = ctx;
     this.grid = this.createGrid();
+
+    this.finishLine = { row: this.grid.length - 1, col: this.grid.length - 1 };
+    this.finishLineImg = new Image();
+    this.finishLineImg.src = 'images/star.png';
+    this.finishLineImgLoaded = this.finishLineImg.onload = this.drawFinishLine.bind(this);
+    // this.finishLine = undefined;
+    // this.spacesMoved = 0;
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
-
-    // this.wallSegments = [];
-    this.wallMidpointsSaved = false;
-    this.wallMidpoints = [];
-
-    // this.wallPixelsSaved = false;
-    // this.wallPixels = times((ctx.canvas.width + 1) * (ctx.canvas.height + 1), () => undefined)
-      // Array(ctx.canvas.width + 1).fill(new Array(ctx.canvas.height + 1));
-    // console.log(this.wallPixels)
+    this.drawFinishLine = this.drawFinishLine.bind(this);
   }
 
   // Allow the maze to be customized via size parameters
@@ -69,13 +68,19 @@ class Maze {
       ny = cy + dy[direction];
 
       if (valid(nx, ny)) {
-        // grid[cy][cx] = grid[cy][cx] || direction;
-        if (cx === 0 && cy === 0) { grid[cy][cx] = 'w'; }
+        grid[cy][cx] = grid[cy][cx] || direction;
         grid[ny][nx] = grid[ny][nx] || opposite[direction];
 
+        // this.finishLine = [ny, nx];
         this.carvePassagesFrom(nx, ny, grid);
+        // this.spacesMoved++;
+        // this.finishLine = [ny, nx];
+        // if (this.spacesMoved === 100) { this.finishLine = [ny, nx]; }
       }
     });
+    // this.finishLine = [cy, cx];
+    // console.log(this.spacesMoved);
+    // console.log(this.finishLine);
   }
 
   // Maps each cell in the maze into an array indicating the walls
@@ -110,11 +115,12 @@ class Maze {
     });
 
     this.wallsCollection = newGrid;
+    return newGrid;
   }
 
   // Draws the maze in canvas
   drawMaze() {
-    const cellSize = this.ctx.canvas.height / this.grid.length;
+    const cellSize = this.cellSize;
     let xStart, yStart;
     let xEnd, yEnd;
 
@@ -133,56 +139,23 @@ class Maze {
             case 'n':
             yEnd = yStart;
             xEnd = xStart + cellSize;
-
-            horizontal = true;
             break;
             case 's':
             yStart += cellSize;
 
             yEnd = yStart;
             xEnd = xStart + cellSize;
-
-            horizontal = true;
             break;
             case 'w':
             xEnd = xStart;
             yEnd = yStart + cellSize;
-
-            vertical = true;
             break;
             case 'e':
             xStart += cellSize;
 
             xEnd = xStart;
             yEnd = yStart + cellSize;
-
-            vertical = true;
             break;
-          }
-
-          // // The first time through, save reference to pixels where walls are located
-          // if (!this.wallPixelsSaved) {
-          //   if (vertical) {
-          //     for (let y = yStart; y < yEnd; y++) {
-          //       // this.wallPixels[xStart * y + y] = true;
-          //     }
-          //   } else if (horizontal) {
-          //     for (let x = xStart; x < xEnd; x++) {
-          //       // this.wallPixels[x * yStart + yStart] = true;
-          //     }
-          //   }
-          // }
-
-          // The first time through, save reference to coordinates of every wall's midpoint
-          if (!this.wallMidpointsSaved) {
-            let midpoint;
-            if (vertical) {
-              midpoint = { x: xStart, y: yStart + (yEnd - yStart) / 2 };
-              this.wallMidpoints.push(midpoint);
-            } else if (horizontal) {
-              midpoint = { x: xStart + (xEnd - xStart) / 2, y: yStart };
-              this.wallMidpoints.push(midpoint);
-            }
           }
 
           this.ctx.moveTo(xStart, yStart);
@@ -190,12 +163,21 @@ class Maze {
         });
       });
     });
-    this.ctx.strokeStyle = "blue";
+    this.ctx.strokeStyle = "black";
     this.ctx.stroke();
-    // this.wallPixelsSaved = true;
-    // console.log(this.wallPixels);
-    this.wallMidpointsSaved = true;
-    // console.log(this.wallMidpoints);
+    this.drawFinishLine();
+  }
+
+  drawFinishLine() {
+    // star.crossOrigin = 'anonymous';
+    // debugger;
+    this.ctx.drawImage(
+      this.finishLineImg,
+      this.finishLine.col * this.cellSize,
+      this.finishLine.row * this.cellSize,
+      this.cellSize,
+      this.cellSize
+    );
   }
 }
 

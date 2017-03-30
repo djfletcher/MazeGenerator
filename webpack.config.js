@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './js/maze_generator_new.js',
+  entry: './js/maze_generator.js',
   output: {
     path: path.resolve(__dirname, 'js'),
     filename: './bundle.js'
