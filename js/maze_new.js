@@ -7,9 +7,13 @@ class Maze {
     this.grid = this.createGrid();
 
     this.finishLine = { row: this.grid.length - 1, col: this.grid.length - 1 };
+    this.finishLineImg = new Image();
+    this.finishLineImg.src = 'images/star.png';
+    this.finishLineImgLoaded = this.finishLineImg.onload = this.drawFinishLine.bind(this);
     // this.finishLine = undefined;
     // this.spacesMoved = 0;
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
+    this.drawFinishLine = this.drawFinishLine.bind(this);
   }
 
   // Allow the maze to be customized via size parameters
@@ -161,6 +165,19 @@ class Maze {
     });
     this.ctx.strokeStyle = "black";
     this.ctx.stroke();
+    this.drawFinishLine();
+  }
+
+  drawFinishLine() {
+    // star.crossOrigin = 'anonymous';
+    // debugger;
+    this.ctx.drawImage(
+      this.finishLineImg,
+      this.finishLine.col * this.cellSize,
+      this.finishLine.row * this.cellSize,
+      this.cellSize,
+      this.cellSize
+    );
   }
 }
 

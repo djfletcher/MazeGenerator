@@ -36,28 +36,12 @@ class Game {
   }
 
   won() {
-    console.log('current pos: ' + [this.player.row, this.player.col]);
-    console.log('finish line: ' + [this.maze.finishLine.row, this.maze.finishLine.col]);
     return (this.player.row === this.maze.finishLine.row &&
             this.player.col === this.maze.finishLine.col);
   }
 
-  getPlayerSize(difficulty) {
-    switch(difficulty) {
-      case 5:
-        return 30;
-      case 10:
-        return 15;
-      case 30:
-        return 5;
-      case 50:
-        return 2;
-    }
-  }
-
   bindKeys() {
     window.key('up, down, left, right', this.draw.bind(this));
-
   }
 
   unbindKeys() {
