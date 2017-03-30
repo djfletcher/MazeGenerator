@@ -1,8 +1,10 @@
 import Player from './player_new';
 import Maze from './maze_new';
+import { changeDifficulty } from './difficulty';
 
 class Game {
   constructor(difficulty) {
+    this.difficulty = difficulty;
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.cellSize = this.canvas.height / difficulty;
@@ -31,7 +33,7 @@ class Game {
     this.player.drawCircle();
     if (this.won()) {
       this.unbindKeys();
-      window.alert("YOU WON!");
+      window.setTimeout(() => changeDifficulty(this.difficulty), 1000);
     }
   }
 

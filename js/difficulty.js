@@ -23,7 +23,7 @@ export const buttonsListening = () => {
   });
 };
 
-const changeDifficulty = difficulty => {
+export const changeDifficulty = difficulty => {
   const game = new Game(difficulty);
   game.setUpGame();
 };
