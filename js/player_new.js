@@ -5,8 +5,8 @@ class Player {
     this.r = r;
     this.ctx = ctx;
 
-    this.currentRow = 0;
-    this.currentCol = 0;
+    this.row = 0;
+    this.col = 0;
 
     this.mazeWalls = undefined;
 
@@ -17,16 +17,9 @@ class Player {
       right: { dx: 2 * (r + 1), dy: 0, dRow: 0, dCol: 1, dir: 'e' }
     };
 
-    // for smoother animation and movement, see below
-    // http://stackoverflow.com/questions/15344104/smooth-character-movement-in-canvas-game-using-keyboard-controls
-
     this.moveCircle = this.moveCircle.bind(this);
     this.drawCircle = this.drawCircle.bind(this);
   }
-
-  // trackWalls(mazeWalls) {
-  //   this.mazeWalls = mazeWalls;
-  // }
 
   drawCircle() {
     const [x, y, r, ctx] = [this.x, this.y, this.r, this.ctx];
@@ -43,21 +36,18 @@ class Player {
     if (this.validNextMove(movement)) {
       this.x = this.x + movement.dx;
       this.y = this.y + movement.dy;
-      this.currentRow = this.currentRow + movement.dRow;
-      this.currentCol = this.currentCol + movement.dCol;
+      this.row = this.row + movement.dRow;
+      this.col = this.col + movement.dCol;
     }
   }
 
   validNextMove(movement) {
     const next = {
-      row: this.currentRow + movement.dRow,
-      col: this.currentCol + movement.dCol
+      row: this.row + movement.dRow,
+      col: this.col + movement.dCol
     };
 
-    // debugger;
-    // return true;
     return this.onCanvas(next) && this.noCollision(movement.dir);
-    // return this.onCanvas(next);
   }
 
   onCanvas(next) {
@@ -66,8 +56,7 @@ class Player {
   }
 
   noCollision(dir) {
-    // debugger;
-    return this.mazeWalls[this.currentRow][this.currentCol].indexOf(dir) < 0;
+    return this.mazeWalls[this.row][this.col].indexOf(dir) < 0;
   }
 }
 

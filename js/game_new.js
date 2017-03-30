@@ -10,7 +10,6 @@ class Game {
     this.maze = new Maze(difficulty, this.ctx);
 
     const r = (this.cellSize - 2) / 2;
-    // const r = this.getPlayerSize(difficulty);
     const x = r + 1;
     const y = r + 1;
     this.player = new Player(x, y, r, this.ctx);
@@ -20,6 +19,7 @@ class Game {
 
   setUpGame(difficulty) {
     this.maze.createMaze();
+    this.finishLine = this.maze.finishLine;
     this.player.mazeWalls = this.maze.mapCellsToWalls();
     this.draw();
   }
@@ -29,6 +29,17 @@ class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
     this.player.drawCircle();
+    if (this.won()) {
+      this.unbindKeys();
+      window.alert("YOU WON!");
+    }
+  }
+
+  won() {
+    console.log('current pos: ' + [this.player.row, this.player.col]);
+    console.log('finish line: ' + [this.maze.finishLine.row, this.maze.finishLine.col]);
+    return (this.player.row === this.maze.finishLine.row &&
+            this.player.col === this.maze.finishLine.col);
   }
 
   getPlayerSize(difficulty) {
@@ -45,10 +56,12 @@ class Game {
   }
 
   bindKeys() {
-    window.key('up', this.draw.bind(this));
-    window.key('down', this.draw.bind(this));
-    window.key('left', this.draw.bind(this));
-    window.key('right', this.draw.bind(this));
+    window.key('up, down, left, right', this.draw.bind(this));
+
+  }
+
+  unbindKeys() {
+    window.key.unbind('up, down, left, right');
   }
 }
 
