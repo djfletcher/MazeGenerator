@@ -11,10 +11,10 @@ class Player {
     this.mazeWalls = undefined;
 
     this.movements = {
-      up: { dx: 0, dy: 2 * (-r - 1), dRow: -1, dCol: 0 },
-      down: { dx: 0, dy: 2 * (r + 1), dRow: 1, dCol: 0 },
-      left: { dx: 2 * (-r - 1), dy: 0, dRow: 0, dCol: -1 },
-      right: { dx: 2 * (r + 1), dy: 0, dRow: 0, dCol: 1 }
+      up: { dx: 0, dy: 2 * (-r - 1), dRow: -1, dCol: 0, dir: 'n' },
+      down: { dx: 0, dy: 2 * (r + 1), dRow: 1, dCol: 0, dir: 's' },
+      left: { dx: 2 * (-r - 1), dy: 0, dRow: 0, dCol: -1, dir: 'w' },
+      right: { dx: 2 * (r + 1), dy: 0, dRow: 0, dCol: 1, dir: 'e' }
     };
 
     // for smoother animation and movement, see below
@@ -56,8 +56,8 @@ class Player {
 
     // debugger;
     // return true;
-    // return this.onCanvas(next) && this.noCollision(next);
-    return this.onCanvas(next);
+    return this.onCanvas(next) && this.noCollision(movement.dir);
+    // return this.onCanvas(next);
   }
 
   onCanvas(next) {
@@ -65,51 +65,9 @@ class Player {
             0 <= next.col && next.col < this.mazeWalls.length);
   }
 
-  // noCollision(next, direction) {
-  //   let pixelProbe = { x: this.x, y: this.y };
-  //
-  //   switch(direction) {
-  //     case 'up':
-  //       pixelProbe.y = next.north;
-  //       break;
-  //     case 'down':
-  //       pixelProbe.y = next.south;
-  //       break;
-  //     case 'right':
-  //       pixelProbe.x = next.east;
-  //       break;
-  //     case 'left':
-  //       pixelProbe.x = next.west;
-  //       break;
-  //   }
-  //
-  //   const dist = (p1, p2) => {
-  //     const dx = p2.x - p1.x;
-  //     const dy = p2.y - p1.y;
-  //     return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-  //   };
-  //
-  //   const collision = wallMidpoint => {
-  //     return dist(wallMidpoint, pixelProbe) < this.r;
-  //   };
-  //
-  //   return this.wallmidpoints.some(collision);
-  // }
-
-  noCollision(next) {
-    let valid = true;
-    const breadth = this.r * 2;
-    const imgData = this.ctx.getImageData(next.west, next.north, breadth, breadth);
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      if (imgData.data[i + 2] === 255) {
-        // debugger;
-        valid = false;
-        alert("blue!");
-        break;
-      }
-    }
-
-    return valid;
+  noCollision(dir) {
+    // debugger;
+    return this.mazeWalls[this.currentRow][this.currentCol].indexOf(dir) < 0;
   }
 }
 
