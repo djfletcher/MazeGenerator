@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // createAndDrawMaze(10);
   const difficulty = 10;
-  const maze = new Maze(difficulty);
+  const maze = new Maze(difficulty, ctx);
   maze.createMaze();
+  maze.mapCellsToWalls();
   // drawMaze(mapCellsToWalls(maze), ctx);
 
   const x = canvas.width / 2;
@@ -37,8 +38,19 @@ const createAndDrawMaze = difficulty => {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const maze = new Maze(difficulty).createMaze();
-  drawMaze(mapCellsToWalls(maze), ctx);
+  const maze = new Maze(difficulty, ctx);
+  maze.createMaze();
+  maze.mapCellsToWalls();
+
+  const x = canvas.width / 2;
+  const y = canvas.height / 2;
+  const r = 70;
+  const player = new Circle(x, y, r, ctx);
+
+  buttonsListening();
+
+  const game = new Game(maze, player, ctx);
+  game.draw();
 };
 
 const buttonsListening = () => {

@@ -1,8 +1,12 @@
 class Maze {
-  constructor(difficulty) {
+  constructor(difficulty, ctx) {
     this.difficulty = difficulty;
+    this.ctx = ctx;
     this.grid = this.createGrid();
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
+    // this.mapCellsToWalls = this.mapCellsToWalls.bind(this);
+    // this.wallsCollection = this.mapCellsToWalls();
+    // debugger;
   }
 
   // Allow the maze to be customized via size parameters
@@ -65,6 +69,85 @@ class Maze {
         this.carvePassagesFrom(nx, ny, grid);
       }
     });
+  }
+
+  // Maps each cell in the maze into an array indicating the walls
+  // that should be drawn around it
+  mapCellsToWalls() {
+    const grid = this.grid;
+    const directions = ['n', 's', 'w', 'e'];
+    const newGrid = [];
+    const inBounds = (row, col) => (
+      0 <= row && row < grid.length &&
+        0 <= col && col < grid[row].length
+    );
+
+    grid.forEach((row, rowIdx) => {
+      let newRow = [];
+      row.map((cell, colIdx) => {
+        let paths = [cell];
+
+        if (inBounds(rowIdx - 1, colIdx) &&
+            grid[rowIdx - 1][colIdx] === 's') { paths.push('n'); }
+        if (inBounds(rowIdx + 1, colIdx) &&
+            grid[rowIdx + 1][colIdx] === 'n') { paths.push('s'); }
+        if (inBounds(rowIdx, colIdx - 1) &&
+            grid[rowIdx][colIdx - 1] === 'e') { paths.push('w'); }
+        if (inBounds(rowIdx, colIdx + 1) &&
+            grid[rowIdx][colIdx + 1] === 'w') { paths.push('e'); }
+
+        let walls = directions.filter(d => !paths.includes(d));
+        newRow.push(walls);
+      });
+      newGrid.push(newRow);
+    });
+
+    this.wallsCollection = newGrid;
+  }
+
+  // Draws the maze in canvas
+  drawMaze() {
+    const cellSize = this.ctx.canvas.height / this.grid.length;
+    let xStart, yStart;
+    let xEnd, yEnd;
+
+    this.ctx.beginPath();
+
+    this.wallsCollection.forEach((row, rowIdx) => {
+      row.forEach((cell, colIdx) => {
+        cell.forEach(wall => {
+          xStart = cellSize * colIdx;
+          yStart = cellSize * rowIdx;
+
+          switch(wall) {
+            case 'n':
+            yEnd = yStart;
+            xEnd = xStart + cellSize;
+            break;
+            case 's':
+            yStart += cellSize;
+
+            yEnd = yStart;
+            xEnd = xStart + cellSize;
+            break;
+            case 'w':
+            xEnd = xStart;
+            yEnd = yStart + cellSize;
+            break;
+            case 'e':
+            xStart += cellSize;
+
+            xEnd = xStart;
+            yEnd = yStart + cellSize;
+            break;
+          }
+          this.ctx.moveTo(xStart, yStart);
+          this.ctx.lineTo(xEnd, yEnd);
+        });
+      });
+    });
+    this.ctx.strokeStyle = "black";
+    this.ctx.stroke();
   }
 }
 
