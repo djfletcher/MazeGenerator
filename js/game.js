@@ -11,31 +11,36 @@ class Game {
 
     const x = this.canvas.width / 2;
     const y = this.canvas.height / 2;
-    const r = 70;
+    const r = this.getPlayerSize(difficulty);
     this.player = new Player(x, y, r, this.ctx);
 
     this.bindKeys();
   }
 
   setUpGame(difficulty) {
-    // const canvas = document.getElementById('canvas');
-    // const ctx = canvas.getContext('2d');
-    // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // const maze = new Maze(difficulty, ctx);
     this.maze.createMaze();
     this.maze.mapCellsToWalls();
     this.draw();
   }
 
   draw(e, handler) {
+    if (e) { this.player.moveCircle(e, handler); }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    // need to refactor drawMaze and mapCellsToWalls to be class methods of Maze
     this.maze.drawMaze();
-    if (e) {
-      this.player.moveCircle(e, handler);
-    }
     this.player.drawCircle();
+  }
+
+  getPlayerSize(difficulty) {
+    switch(difficulty) {
+      case 5:
+        return 30;
+      case 10:
+        return 15;
+      case 30:
+        return 5;
+      case 50:
+        return 2;
+    }
   }
 
   bindKeys() {

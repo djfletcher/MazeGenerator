@@ -6,10 +6,10 @@ class Player {
     this.ctx = ctx;
 
     this.movements = {
-      up: { dx: 0, dy: -5 },
-      down: { dx: 0, dy: 5 },
-      left: { dx: -5, dy: 0 },
-      right: { dx: 5, dy: 0 }
+      up: { dx: 0, dy: -1 },
+      down: { dx: 0, dy: 1 },
+      left: { dx: -1, dy: 0 },
+      right: { dx: 1, dy: 0 }
     };
 
     this.moveCircle = this.moveCircle.bind(this);
