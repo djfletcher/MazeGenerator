@@ -26,6 +26,8 @@ class Game {
     if (e) { this.player.moveCircle(e, handler); }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
+
+    this.player.trackWalls(this.maze.wallMidpoints);
     this.player.drawCircle();
   }
 

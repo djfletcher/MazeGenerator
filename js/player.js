@@ -20,9 +20,13 @@ class Player {
     this.drawCircle = this.drawCircle.bind(this);
   }
 
+  trackWalls(wallMidpoints) {
+    this.wallmidpoints = wallMidpoints;
+  }
+
   moveCircle(e, handler) {
     const movement = this.movements[handler.shortcut];
-    if (this.validNextMove(movement)) {
+    if (this.validNextMove(movement, handler.shortcut)) {
       this.x = this.x + movement.dx;
       this.y = this.y + movement.dy;
     }
@@ -38,7 +42,7 @@ class Player {
     // ctx.stroke();
   }
 
-  validNextMove(movement) {
+  validNextMove(movement, direction) {
     const next = {
       north: this.y + movement.dy - this.r,
       south: this.y + movement.dy + this.r,
@@ -46,8 +50,8 @@ class Player {
       east: this.x + movement.dx + this.r
     };
 
-    // return this.onCanvas(next) && this.noCollision(next);
-    return this.onCanvas(next);
+    return this.onCanvas(next) && this.noCollision(next, direction);
+    // return this.onCanvas(next);
   }
 
   onCanvas(next) {
@@ -62,6 +66,46 @@ class Player {
 
     return valid;
   }
+
+  noCollision(next, direction) {
+    let pixelProbe = { x: this.x, y: this.y };
+
+    switch(direction) {
+      case 'up':
+        pixelProbe.y = next.north;
+        break;
+      case 'down':
+        pixelProbe.y = next.south;
+        break;
+      case 'right':
+        pixelProbe.x = next.east;
+        break;
+      case 'left':
+        pixelProbe.x = next.west;
+        break;
+    }
+
+    const dist = (p1, p2) => {
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+    };
+
+    const collision = wallMidpoint => {
+      return dist(wallMidpoint, pixelProbe) < this.r;
+    };
+
+    return this.wallmidpoints.some(collision);
+    // return this.detectCollision(pixel);
+  }
+
+  // detectCollision(pixel) {
+  //   // this.wallSegments.some(wall => {
+  //   //
+  //   // });
+  //   //
+  //   // return false;
+  // }
 
   // noCollision(next) {
   //   let valid = true;

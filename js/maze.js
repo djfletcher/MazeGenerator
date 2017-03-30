@@ -1,4 +1,4 @@
-import { times, cloneDeep } from 'lodash'
+import { times, cloneDeep } from 'lodash';
 
 class Maze {
   constructor(difficulty, ctx) {
@@ -7,7 +7,9 @@ class Maze {
     this.grid = this.createGrid();
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
 
-    this.wallSegments = [];
+    // this.wallSegments = [];
+    this.wallMidpointsSaved = false;
+    this.wallMidpoints = [];
 
     // this.wallPixelsSaved = false;
     // this.wallPixels = times((ctx.canvas.width + 1) * (ctx.canvas.height + 1), () => undefined)
@@ -171,7 +173,17 @@ class Maze {
           //   }
           // }
 
-          this.wallSegments.push({ p1: [xStart, yStart], p2: [xEnd, yEnd] });
+          // The first time through, save reference to coordinates of every wall's midpoint
+          if (!this.wallMidpointsSaved) {
+            let midpoint;
+            if (vertical) {
+              midpoint = { x: xStart, y: yStart + (yEnd - yStart) / 2 };
+              this.wallMidpoints.push(midpoint);
+            } else if (horizontal) {
+              midpoint = { x: xStart + (xEnd - xStart) / 2, y: yStart };
+              this.wallMidpoints.push(midpoint);
+            }
+          }
 
           this.ctx.moveTo(xStart, yStart);
           this.ctx.lineTo(xEnd, yEnd);
@@ -182,7 +194,8 @@ class Maze {
     this.ctx.stroke();
     // this.wallPixelsSaved = true;
     // console.log(this.wallPixels);
-    // console.log(this.wallSegments);
+    this.wallMidpointsSaved = true;
+    // console.log(this.wallMidpoints);
   }
 }
 
