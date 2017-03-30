@@ -190,7 +190,7 @@ class Maze {
         });
       });
     });
-    this.ctx.strokeStyle = "black";
+    this.ctx.strokeStyle = "blue";
     this.ctx.stroke();
     // this.wallPixelsSaved = true;
     // console.log(this.wallPixels);

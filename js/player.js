@@ -67,61 +67,52 @@ class Player {
     return valid;
   }
 
-  noCollision(next, direction) {
-    let pixelProbe = { x: this.x, y: this.y };
-
-    switch(direction) {
-      case 'up':
-        pixelProbe.y = next.north;
-        break;
-      case 'down':
-        pixelProbe.y = next.south;
-        break;
-      case 'right':
-        pixelProbe.x = next.east;
-        break;
-      case 'left':
-        pixelProbe.x = next.west;
-        break;
-    }
-
-    const dist = (p1, p2) => {
-      const dx = p2.x - p1.x;
-      const dy = p2.y - p1.y;
-      return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-    };
-
-    const collision = wallMidpoint => {
-      return dist(wallMidpoint, pixelProbe) < this.r;
-    };
-
-    return this.wallmidpoints.some(collision);
-    // return this.detectCollision(pixel);
-  }
-
-  // detectCollision(pixel) {
-  //   // this.wallSegments.some(wall => {
-  //   //
-  //   // });
-  //   //
-  //   // return false;
-  // }
-
-  // noCollision(next) {
-  //   let valid = true;
-  //   const breadth = this.r * 2;
-  //   const imgData = this.ctx.getImageData(next.west, next.north, breadth, breadth);
-  //   // debugger;
-  //   for (let i = 0; i < imgData.data.length; i++) {
-  //     if (imgData.data[i] == 0) {
-  //       valid = false;
-  //       alert("black!");
+  // noCollision(next, direction) {
+  //   let pixelProbe = { x: this.x, y: this.y };
+  //
+  //   switch(direction) {
+  //     case 'up':
+  //       pixelProbe.y = next.north;
   //       break;
-  //     }
+  //     case 'down':
+  //       pixelProbe.y = next.south;
+  //       break;
+  //     case 'right':
+  //       pixelProbe.x = next.east;
+  //       break;
+  //     case 'left':
+  //       pixelProbe.x = next.west;
+  //       break;
   //   }
   //
-  //   return valid;
+  //   const dist = (p1, p2) => {
+  //     const dx = p2.x - p1.x;
+  //     const dy = p2.y - p1.y;
+  //     return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+  //   };
+  //
+  //   const collision = wallMidpoint => {
+  //     return dist(wallMidpoint, pixelProbe) < this.r;
+  //   };
+  //
+  //   return this.wallmidpoints.some(collision);
   // }
+
+  noCollision(next) {
+    let valid = true;
+    const breadth = this.r * 2;
+    const imgData = this.ctx.getImageData(next.west, next.north, breadth, breadth);
+    for (let i = 0; i < imgData.data.length; i += 4) {
+      if (imgData.data[i + 2] === 255) {
+        // debugger;
+        valid = false;
+        alert("blue!");
+        break;
+      }
+    }
+
+    return valid;
+  }
 }
 
 export default Player;
