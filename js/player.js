@@ -22,6 +22,7 @@ class Player {
 
     this.moveCircle = this.moveCircle.bind(this);
     this.drawCircle = this.drawCircle.bind(this);
+    this.animateMove = this.animateMove.bind(this);
   }
 
   drawCircle() {
@@ -38,12 +39,34 @@ class Player {
   moveCircle(e, handler) {
     const movement = this.movements[handler.shortcut];
     if (this.validNextMove(movement)) {
+      // const nx = this.x + movement.dx;
+      // const ny = this.y + movement.dy;
+
+      // this.animateMove(nx, ny, movement.dx, movement.dy);
+
       this.x = this.x + movement.dx;
       this.y = this.y + movement.dy;
       this.row = this.row + movement.dRow;
       this.col = this.col + movement.dCol;
 
       this.trail.drag(this.x, this.y);
+    }
+  }
+
+  animateMove(nx, ny, dx, dy) {
+    let x = 0;
+    let y = 0;
+    //move by one pixel per frame in the appropriate dx or dy direction
+    if (dx !== 0) { x = dx < 0 ? -1 : 1; }
+    if (dy !== 0) { y = dy < 0 ? -1 : 1; }
+    // let x = dx < 0 ? -1 : 1;
+    // let y = dy < 0 ? -1 : 1;
+
+    if (Math.abs(nx - this.x) > 0 || Math.abs(ny - this.y) > 0) {
+      this.x = this.x + x;
+      this.y = this.y + y;
+      this.drawCircle();
+      window.requestAnimationFrame(() => this.animateMove(nx, ny, dx, dy));
     }
   }
 

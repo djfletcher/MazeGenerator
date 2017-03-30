@@ -16,6 +16,8 @@ class Game {
     const y = r + 1;
     this.player = new Player(x, y, r, this.ctx);
 
+    this.animating = false;
+
     this.bindKeys();
   }
 
@@ -28,6 +30,7 @@ class Game {
   }
 
   draw(e, handler) {
+    // this.unbindKeys();
     if (e) { this.player.moveCircle(e, handler); }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
@@ -37,6 +40,7 @@ class Game {
       this.unbindKeys();
       window.setTimeout(() => changeDifficulty(this.difficulty), 1000);
     }
+    // this.bindKeys();
   }
 
   won() {
