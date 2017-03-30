@@ -20,7 +20,7 @@ class Game {
 
   setUpGame(difficulty) {
     this.maze.createMaze();
-    this.maze.mapCellsToWalls();
+    this.player.mazeWalls = this.maze.mapCellsToWalls();
     this.draw();
   }
 
@@ -28,8 +28,6 @@ class Game {
     if (e) { this.player.moveCircle(e, handler); }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
-
-    this.player.trackWalls(this.maze.wallMidpoints);
     this.player.drawCircle();
   }
 

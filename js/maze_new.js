@@ -112,6 +112,7 @@ class Maze {
     });
     // debugger;
     this.wallsCollection = newGrid;
+    return newGrid;
   }
 
   // Draws the maze in canvas

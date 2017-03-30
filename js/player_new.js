@@ -8,11 +8,13 @@ class Player {
     this.currentRow = 0;
     this.currentCol = 0;
 
+    this.mazeWalls = undefined;
+
     this.movements = {
       up: { dx: 0, dy: 2 * (-r - 1), dRow: -1, dCol: 0 },
       down: { dx: 0, dy: 2 * (r + 1), dRow: 1, dCol: 0 },
-      left: { dx: 2 * (-r - 1), dy: 0, dRow: -1, dCol: 0 },
-      right: { dx: 2 * (r + 1), dy: 0, dRow: 1, dCol: 0 }
+      left: { dx: 2 * (-r - 1), dy: 0, dRow: 0, dCol: -1 },
+      right: { dx: 2 * (r + 1), dy: 0, dRow: 0, dCol: 1 }
     };
 
     // for smoother animation and movement, see below
@@ -22,9 +24,9 @@ class Player {
     this.drawCircle = this.drawCircle.bind(this);
   }
 
-  trackWalls(mazeWalls) {
-    this.mazeWalls = mazeWalls;
-  }
+  // trackWalls(mazeWalls) {
+  //   this.mazeWalls = mazeWalls;
+  // }
 
   drawCircle() {
     const [x, y, r, ctx] = [this.x, this.y, this.r, this.ctx];
@@ -41,31 +43,26 @@ class Player {
     if (this.validNextMove(movement)) {
       this.x = this.x + movement.dx;
       this.y = this.y + movement.dy;
+      this.currentRow = this.currentRow + movement.dRow;
+      this.currentCol = this.currentCol + movement.dCol;
     }
   }
 
   validNextMove(movement) {
     const next = {
-      // row: ,
-      // col:
-    }
+      row: this.currentRow + movement.dRow,
+      col: this.currentCol + movement.dCol
+    };
 
-    return true;
+    // debugger;
+    // return true;
     // return this.onCanvas(next) && this.noCollision(next);
-    // return this.onCanvas(next);
+    return this.onCanvas(next);
   }
 
   onCanvas(next) {
-    let valid = true;
-
-    const width = this.ctx.canvas.width;
-    const height = this.ctx.canvas.height;
-
-    // if next move will be off board
-    if (next.north < 0 || next.south > height) { valid = false; }
-    if (next.west < 0 || next.east > width) { valid = false; }
-
-    return valid;
+    return (0 <= next.row && next.row < this.mazeWalls.length &&
+            0 <= next.col && next.col < this.mazeWalls.length);
   }
 
   // noCollision(next, direction) {
