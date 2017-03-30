@@ -5,12 +5,14 @@ class Game {
   constructor(difficulty) {
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
+    this.cellSize = this.canvas.height / difficulty;
 
     this.maze = new Maze(difficulty, this.ctx);
 
-    const r = this.getPlayerSize(difficulty);
-    const x = r * 2;
-    const y = r * 2;
+    const r = (this.cellSize - 2) / 2;
+    // const r = this.getPlayerSize(difficulty);
+    const x = r + 1;
+    const y = r + 1;
     this.player = new Player(x, y, r, this.ctx);
 
     this.bindKeys();

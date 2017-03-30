@@ -3,6 +3,8 @@ import { times, cloneDeep } from 'lodash';
 class Maze {
   constructor(difficulty, ctx) {
     this.difficulty = difficulty;
+    this.cellSize = ctx.canvas.height / difficulty;
+
     this.ctx = ctx;
     this.grid = this.createGrid();
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
@@ -108,13 +110,14 @@ class Maze {
       });
       newGrid.push(newRow);
     });
-
+    // debugger;
     this.wallsCollection = newGrid;
   }
 
   // Draws the maze in canvas
   drawMaze() {
-    const cellSize = this.ctx.canvas.height / this.grid.length;
+    const cellSize = this.cellSize;
+    // const cellSize = this.ctx.canvas.height / this.grid.length;
     let xStart, yStart;
     let xEnd, yEnd;
 
@@ -190,7 +193,7 @@ class Maze {
         });
       });
     });
-    this.ctx.strokeStyle = "blue";
+    this.ctx.strokeStyle = "black";
     this.ctx.stroke();
     // this.wallPixelsSaved = true;
     // console.log(this.wallPixels);

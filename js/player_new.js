@@ -5,12 +5,14 @@ class Player {
     this.r = r;
     this.ctx = ctx;
 
-    const speed = r / 2;
+    this.currentRow = 0;
+    this.currentCol = 0;
+
     this.movements = {
-      up: { dx: 0, dy: -speed },
-      down: { dx: 0, dy: speed },
-      left: { dx: -speed, dy: 0 },
-      right: { dx: speed, dy: 0 }
+      up: { dx: 0, dy: 2 * (-r - 1), dRow: -1, dCol: 0 },
+      down: { dx: 0, dy: 2 * (r + 1), dRow: 1, dCol: 0 },
+      left: { dx: 2 * (-r - 1), dy: 0, dRow: -1, dCol: 0 },
+      right: { dx: 2 * (r + 1), dy: 0, dRow: 1, dCol: 0 }
     };
 
     // for smoother animation and movement, see below
@@ -20,16 +22,8 @@ class Player {
     this.drawCircle = this.drawCircle.bind(this);
   }
 
-  trackWalls(wallMidpoints) {
-    this.wallmidpoints = wallMidpoints;
-  }
-
-  moveCircle(e, handler) {
-    const movement = this.movements[handler.shortcut];
-    if (this.validNextMove(movement, handler.shortcut)) {
-      this.x = this.x + movement.dx;
-      this.y = this.y + movement.dy;
-    }
+  trackWalls(mazeWalls) {
+    this.mazeWalls = mazeWalls;
   }
 
   drawCircle() {
@@ -38,19 +32,26 @@ class Player {
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
     ctx.fillStyle = 'red';
     ctx.fill();
-    // ctx.strokeStyle = 'blue';
-    // ctx.stroke();
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
   }
 
-  validNextMove(movement, direction) {
-    const next = {
-      north: this.y + movement.dy - this.r,
-      south: this.y + movement.dy + this.r,
-      west: this.x + movement.dx - this.r,
-      east: this.x + movement.dx + this.r
-    };
+  moveCircle(e, handler) {
+    const movement = this.movements[handler.shortcut];
+    if (this.validNextMove(movement)) {
+      this.x = this.x + movement.dx;
+      this.y = this.y + movement.dy;
+    }
+  }
 
-    return this.onCanvas(next) && this.noCollision(next, direction);
+  validNextMove(movement) {
+    const next = {
+      // row: ,
+      // col:
+    }
+
+    return true;
+    // return this.onCanvas(next) && this.noCollision(next);
     // return this.onCanvas(next);
   }
 

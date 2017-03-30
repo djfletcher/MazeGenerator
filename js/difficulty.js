@@ -1,4 +1,5 @@
-import Game from './game';
+import Game from './game_new';
+// import Game from './game';
 
 export const buttonsListening = () => {
   const easy = document.getElementById("easy");
