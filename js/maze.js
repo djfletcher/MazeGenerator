@@ -1,3 +1,5 @@
+import { times, cloneDeep } from 'lodash'
+
 class Maze {
   constructor(difficulty, ctx) {
     this.difficulty = difficulty;
@@ -5,8 +7,12 @@ class Maze {
     this.grid = this.createGrid();
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
 
-    this.wallPixelsSaved = false;
-    this.wallPixels = Array(ctx.canvas.width + 1).fill(Array(ctx.canvas.height + 1));
+    this.wallSegments = [];
+
+    // this.wallPixelsSaved = false;
+    // this.wallPixels = times((ctx.canvas.width + 1) * (ctx.canvas.height + 1), () => undefined)
+      // Array(ctx.canvas.width + 1).fill(new Array(ctx.canvas.height + 1));
+    // console.log(this.wallPixels)
   }
 
   // Allow the maze to be customized via size parameters
@@ -127,7 +133,6 @@ class Maze {
             xEnd = xStart + cellSize;
 
             horizontal = true;
-            // this.makeVirtualRepresentation({ xStart, xEnd });
             break;
             case 's':
             yStart += cellSize;
@@ -153,20 +158,20 @@ class Maze {
             break;
           }
 
-          // The first time through, save reference to pixels where walls are located
-          if (!this.wallPixelsSaved) {
-            if (vertical) {
-              for (let y = yStart; y < yEnd; y++) {
-                this.wallPixels[xStart][y] = true;
-                // if (y < 0 || y >= this.wallPixels.length) { debugger; }
-              }
-            } else if (horizontal) {
-              for (let x = xStart; x < xEnd; x++) {
-                this.wallPixels[x][yStart] = true;
-                // if (x < 0 || x >= this.wallPixels.length) { debugger; }
-              }
-            }
-          }
+          // // The first time through, save reference to pixels where walls are located
+          // if (!this.wallPixelsSaved) {
+          //   if (vertical) {
+          //     for (let y = yStart; y < yEnd; y++) {
+          //       // this.wallPixels[xStart * y + y] = true;
+          //     }
+          //   } else if (horizontal) {
+          //     for (let x = xStart; x < xEnd; x++) {
+          //       // this.wallPixels[x * yStart + yStart] = true;
+          //     }
+          //   }
+          // }
+
+          this.wallSegments.push({ p1: [xStart, yStart], p2: [xEnd, yEnd] });
 
           this.ctx.moveTo(xStart, yStart);
           this.ctx.lineTo(xEnd, yEnd);
@@ -175,7 +180,9 @@ class Maze {
     });
     this.ctx.strokeStyle = "black";
     this.ctx.stroke();
-    this.wallPixelsSaved = true;
+    // this.wallPixelsSaved = true;
+    // console.log(this.wallPixels);
+    // console.log(this.wallSegments);
   }
 }
 
