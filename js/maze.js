@@ -122,7 +122,8 @@ class Maze {
     return newGrid;
   }
 
-  animateMazeBuild(i, drawRestOfCanvas, bindKeys) {
+  // animateMazeBuild(i, drawRestOfCanvas, bindKeys, checkIfNewMazeTriggered) {
+  animateMazeBuild(i, drawRestOfCanvas, bindKeys, activateDifficultyButtons) {
     // debugger;
     const indices = this.orderBuilt[i];
     const cellSize = this.cellSize;
@@ -165,11 +166,23 @@ class Maze {
     this.ctx.stroke();
     this.drawFinishLine();
 
+    // if (checkIfNewMazeTriggered()) {
+      // debugger;
+      // bindKeys();
+      // return;
     if (i < this.difficulty * this.difficulty - 2) {
-      window.requestAnimationFrame(() => this.animateMazeBuild(i + 1, drawRestOfCanvas, bindKeys));
+      window.requestAnimationFrame(
+        () => this.animateMazeBuild(
+          i + 1,
+          drawRestOfCanvas,
+          bindKeys,
+          activateDifficultyButtons
+          // checkIfNewMazeTriggered
+        ));
     } else {
       drawRestOfCanvas();
       bindKeys();
+      activateDifficultyButtons();
     }
   }
 
