@@ -11,8 +11,8 @@ class Game {
     this.difficulty = difficulty;
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
-    this.cellSize = this.canvas.height / difficulty;
 
+    this.difficultyButtonsActive();
     // this.maze = new Maze(difficulty, this.ctx);
 
     // const r = (this.cellSize - 2) / 2;
@@ -24,9 +24,11 @@ class Game {
 
   setUpGame(difficulty) {
     this.unbindKeys();
+    this.difficulty = difficulty || this.difficulty;
+    this.cellSize = this.canvas.height / this.difficulty;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.maze = new Maze(difficulty || this.difficulty, this.ctx);
+    this.maze = new Maze(this.difficulty, this.ctx);
     this.maze.createMaze();
     this.finishLine = this.maze.finishLine;
 
@@ -46,7 +48,7 @@ class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
     this.player.drawCircle();
-    this.player.trail.drawTail();
+    this.player.trail.drawTrail();
     if (this.won()) {
       this.unbindKeys();
       window.setTimeout(this.setUpGame, 1000);

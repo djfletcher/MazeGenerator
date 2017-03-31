@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,94 +71,48 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__player__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maze__ = __webpack_require__(1);
 
 
-const buttonsListening = () => {
-  const easy = document.getElementById("easy");
-  const medium = document.getElementById("medium");
-  const hard = document.getElementById("hard");
-  const insane = document.getElementById("insane");
-
-  easy.addEventListener("click", () => {
-    changeDifficulty(5);
-  });
-
-  medium.addEventListener("click", () => {
-    changeDifficulty(10);
-  });
-
-  hard.addEventListener("click", () => {
-    changeDifficulty(25);
-  });
-
-  insane.addEventListener("click", () => {
-    // changeDifficulty(45);
-    changeDifficulty(50);
-  });
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = buttonsListening;
-
-
-const changeDifficulty = difficulty => {
-  const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */](difficulty);
-  game.setUpGame();
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = changeDifficulty;
-
-
-
-// some ruby to calc even divisors of each canvas width/height for difficulty levels
-// def factors (num)
-//  f = []
-//  (2..num).each {|n| f << n if num % n == 0 }
-//  return f
-// end
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__player__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maze__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__difficulty__ = __webpack_require__(0);
-
-
-
-
+// import { changeDifficulty } from './difficulty';
 
 // NEXT --> if you pass a branching point have the trail leave a node there,
 // just a fatter point that sticks out of the line, and you can hit space to
 // return to your last node.
-
-
-
-
-
 
 class Game {
   constructor(difficulty) {
     this.difficulty = difficulty;
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
-    this.cellSize = this.canvas.height / difficulty;
 
-    this.maze = new __WEBPACK_IMPORTED_MODULE_1__maze__["a" /* default */](difficulty, this.ctx);
+    this.difficultyButtonsActive();
+    // this.maze = new Maze(difficulty, this.ctx);
+
+    // const r = (this.cellSize - 2) / 2;
+    // const x = r + 1;
+    // const y = r + 1;
+    // this.player = new Player(x, y, r, this.ctx);
+    this.setUpGame = this.setUpGame.bind(this);
+  }
+
+  setUpGame(difficulty) {
+    this.unbindKeys();
+    this.difficulty = difficulty || this.difficulty;
+    this.cellSize = this.canvas.height / this.difficulty;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.maze = new __WEBPACK_IMPORTED_MODULE_1__maze__["a" /* default */](this.difficulty, this.ctx);
+    this.maze.createMaze();
+    this.finishLine = this.maze.finishLine;
 
     const r = (this.cellSize - 2) / 2;
     const x = r + 1;
     const y = r + 1;
     this.player = new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */](x, y, r, this.ctx);
-  }
-
-  setUpGame(difficulty) {
-    this.unbindKeys();
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.maze.createMaze();
-    this.finishLine = this.maze.finishLine;
     this.player.mazeWalls = this.maze.mapCellsToWalls();
+
     this.maze.animateMazeBuild(0, this.draw.bind(this), this.bindKeys.bind(this));
     // this.draw();
     // this.bindKeys();
@@ -169,10 +123,10 @@ class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
     this.player.drawCircle();
-    this.player.trail.drawTail();
+    this.player.trail.drawTrail();
     if (this.won()) {
       this.unbindKeys();
-      window.setTimeout(() => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__difficulty__["b" /* changeDifficulty */])(this.difficulty), 1000);
+      window.setTimeout(this.setUpGame, 1000);
     }
     // debugger;
     // this.bindKeys();
@@ -192,13 +146,38 @@ class Game {
   unbindKeys() {
     window.key.unbind('up, down, left, right');
   }
+
+  difficultyButtonsActive() {
+    const easy = document.getElementById("easy");
+    const medium = document.getElementById("medium");
+    const hard = document.getElementById("hard");
+    const insane = document.getElementById("insane");
+
+    easy.addEventListener("click", () => {
+      this.setUpGame(5);
+      // changeDifficulty(5);
+    });
+
+    medium.addEventListener("click", () => {
+      this.setUpGame(10);
+    });
+
+    hard.addEventListener("click", () => {
+      this.setUpGame(25);
+    });
+
+    insane.addEventListener("click", () => {
+      // changeDifficulty(45);
+      this.setUpGame(50);
+    });
+  }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Game);
 
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -442,15 +421,14 @@ class Maze {
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__difficulty__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__game__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game__ = __webpack_require__(0);
 // import { drawMaze, animate } from './animate_maze_build';
-
+// import { buttonsListening } from './difficulty';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -461,19 +439,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // canvas.height = 450;
 
   const defaultDifficulty = 10;
-  const game = new __WEBPACK_IMPORTED_MODULE_1__game__["a" /* default */](defaultDifficulty);
+  const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */](defaultDifficulty);
   game.setUpGame();
-
-  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__difficulty__["a" /* buttonsListening */])();
 });
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__trail__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__trail__ = __webpack_require__(4);
 
 
 class Player {
@@ -569,7 +545,7 @@ class Player {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -583,7 +559,7 @@ class Trail {
     this.path.push({ x, y });
   }
 
-  drawTail() {
+  drawTrail() {
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     this.path.forEach(point => {

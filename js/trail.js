@@ -8,7 +8,7 @@ class Trail {
     this.path.push({ x, y });
   }
 
-  drawTail() {
+  drawTrail() {
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     this.path.forEach(point => {
