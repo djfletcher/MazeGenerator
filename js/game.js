@@ -90,6 +90,11 @@ class Game {
     this.medium.addEventListener("click", this.mediumListener);
     this.hard.addEventListener("click", this.hardListener);
     this.insane.addEventListener("click", this.insaneListener);
+
+    this.easy.className = "";
+    this.medium.className = "";
+    this.hard.className = "";
+    this.insane.className = "";
   }
 
   disableDifficultyButtons() {
@@ -97,6 +102,11 @@ class Game {
     this.medium.removeEventListener("click", this.mediumListener);
     this.hard.removeEventListener("click", this.hardListener);
     this.insane.removeEventListener("click", this.insaneListener);
+
+    this.easy.className = "disabled";
+    this.medium.className = "disabled";
+    this.hard.className = "disabled";
+    this.insane.className = "disabled";
   }
 }
 

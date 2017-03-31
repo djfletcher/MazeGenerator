@@ -67,6 +67,15 @@ h1 {
   background-color: rgb(15, 38, 60);
 }
 
+.difficulty-buttons button.disabled {
+  background-color: rgb(176, 171, 166);
+}
+
+.difficulty-buttons button.disabled:hover {
+  cursor: default;
+  color: rgb(15, 38, 60);
+}
+
 .footer-links {
   display: flex;
   justify-content: space-around;

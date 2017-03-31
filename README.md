@@ -1,10 +1,6 @@
-# Random Maze Generator
+# Maze Generator
 
-## Background
-
-Maze generation is the act of designing the layout of passages and walls within a maze. There are many different strategies for designing algorithms that build mazes -- random traversal, recursive backtracking, Prim’s algorithm, Kruskal's algorithm, and countless others.
-
-In this project, I will utilize recursive backtracking to generate a random maze that builds itself while the user watches in real time. Then once it is finished being built it becomes playable and the user can try to solve the maze.
+Maze Generator utilizes a recursive backtracking algorithm to generate random, solvable mazes that draw each pathway as it is built. Once the drawing is complete, it's up to you to solve the maze.
 
 ## Functionality and MVP
 
