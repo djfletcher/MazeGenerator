@@ -252,9 +252,11 @@ class Maze {
     const dy = { e: 0, w: 0, n: -1, s: 1 };
     const opposite = { e: w, w: e, n: s, s: n };
 
+    // Randomize the directions to explore from this cell
     const directions = this.shuffle(['n', 's', 'e', 'w']);
     let nx, ny;
 
+    // Validates that next cell is on the grid and has not yet been explored
     const valid = (col, row) => (
       0 <= row && row < grid.length &&
         0 <= col && col < grid[row].length &&
@@ -265,21 +267,15 @@ class Maze {
       nx = cx + dx[direction];
       ny = cy + dy[direction];
 
+      // Saves a reference to the passage carved from this cell
       if (valid(nx, ny)) {
         grid[cy][cx] = grid[cy][cx] || direction;
         grid[ny][nx] = grid[ny][nx] || opposite[direction];
 
         this.orderBuilt.push({ row: ny, col: nx });
-        // this.finishLine = [ny, nx];
         this.carvePassagesFrom(nx, ny, grid);
-        // this.spacesMoved++;
-        // this.finishLine = [ny, nx];
-        // if (this.spacesMoved === 100) { this.finishLine = [ny, nx]; }
       }
     });
-    // this.finishLine = [cy, cx];
-    // console.log(this.spacesMoved);
-    // console.log(this.finishLine);
   }
 
   // Maps each cell in the maze into an array indicating the walls

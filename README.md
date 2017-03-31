@@ -1,50 +1,68 @@
-# Maze Generator
+# Random Maze Generator
 
-Maze Generator utilizes a recursive backtracking algorithm to generate random, solvable mazes that draw each pathway as it is built. Once the drawing is complete, it's up to you to solve the maze.
+[Random Maze Generator](https://djfletcher.github.io/MazeGenerator/) is an interactive algorithm visualizer. It utilizes a recursive backtracking algorithm to generate random, solvable mazes that draw themselves as they are built. Once the maze build is complete, it becomes interactive and you may try to solve it.
 
-## Functionality and MVP
+## Features
 
-With this maze generator users will be able to:
+#### Maze Generating Algorithm
 
-+ Choose the difficulty of the maze they would like to solve
-+ Watch the maze being randomly built using a recursive backtracking algorithm
-+ Use the keyboard to travel through the maze and try to solve it
+The recursive backtracking algorithm starts with a two dimensional grid of empty cells. It is kicked off when provided a starting cell in the grid, breaks through a random wall into a neighboring cell that has not yet been visited, and repeats the process in the next cell. The maze is complete when all cells have been visited.
 
-In addition this project will include:
+````
+// The recursive backtracking algorithm
+carvePassagesFrom(cx, cy, grid) {
+  // Set up constants to aid with describing the passage directions
+  const [n, s, e, w] = ['n', 's', 'e', 'w'];
+  const dx = { e: 1, w: -1, n: 0, s: 0 };
+  const dy = { e: 0, w: 0, n: -1, s: 1 };
+  const opposite = { e: w, w: e, n: s, s: n };
 
-+ A simple user interface that requires no instructions
-+ An aesthetically pleasing layout and color scheme
-+ A production README
+  // Randomize the directions to explore from this cell
+  const directions = this.shuffle(['n', 's', 'e', 'w']);
+  let nx, ny;
 
-## Wireframes
+  // Validates that next cell is on the grid and has not yet been explored
+  const valid = (col, row) => (
+    0 <= row && row < grid.length &&
+      0 <= col && col < grid[row].length &&
+      grid[row][col] === 0
+  );
 
-This app will consist of a single page displaying maze, game controls, and nav links to the site's Github repository, my LinkedIn, and my email. Game controls will simply be the arrow keys to move through the maze. A maze will automatically begin building itself upon loading the page. Once they solve it, there will be buttons to generate another easy, medium, or hard maze, and upon clicking those buttons a new maze will start building itself on the page.
+  directions.forEach(direction => {
+    nx = cx + dx[direction];
+    ny = cy + dy[direction];
 
-![wireframe](./wireframes/maze_generator.png)
+    // Saves a reference to the passage carved from this cell
+    if (valid(nx, ny)) {
+      grid[cy][cx] = grid[cy][cx] || direction;
+      grid[ny][nx] = grid[ny][nx] || opposite[direction];
+
+      this.orderBuilt.push({ row: ny, col: nx });
+      this.carvePassagesFrom(nx, ny, grid);
+    }
+  });
+}
+````
+
+#### Algorithm Visualizer
+
+As the maze algorithm runs, it stores a reference to the order in which each cell was visited. It then draws the maze in the order that each cell was visited so that users can visualize how the recursive backtracking algorithm works.
+
+
+#### Interactive Game
+
+Once the maze is completely built, users are able to use the keyboard to travel through the maze and try to solve it. For collision detection, the Player class is provided an abstraction of the maze that was just built. The abstraction is in the form of a two dimensional array where each element corresponds to one cell of the maze. Each cell contains a reference to the walls that surround it: north, south, east, or west. As the player navigates through the maze on the screen, the Player class updates its current position in the abstracted maze, and prevents movement from the current cell in any directions for which walls are detected.
+
+The Keymaster.js library was leveraged to map arrow keys to directional input.
 
 ## Architecture and Technologies
 
 + Vanilla Javascript (ES6) to fulfill the overall logic for maze generation and for the interactive game.
 + Keymaster.js to allow users to interact with the game using arrows on the keyboard.
-+ Easel.js with HTML5 Canvas for DOM manipulation and rendering
++ HTML5 Canvas for rendering of the maze.
 + Webpack to bundle and serve up the various scripts.
 
-In addition to webpack, there will be two scripts involved in this project:
-
-+ `generator.js`: this script will handle the logic for generating a random maze of the appropriate difficulty, using a recursive backtracking algorithm.
-+ `game.js`: this script will handle the logic for the interactive game where the user uses keyboard inputs to solve the maze.
-
-## Implementation Timeline
-
-**Day 1:** Setup all necessary Node modules, including getting webpack, Easel.js, and Keymaster.js installed. Create webpack.config.js as well as package.json. Write a basic entry file and the bare bones of both scripts outlined above. Learn the basics of Easel.js and Keymaster.js.
-
-**Day 2:** Write the recursive backtracking algorithm to generate random mazes. Have the algorithm take parameters of maze width and height to determine size (complexity) of maze. Integrate it with Easel.js so that a basic outline of the generated maze renders on the page.
-
-**Day 3:** Write the logic for the interactive game, using Keymaster.js to map keyboard inputs to movements in the maze. Create buttons for user to generate a new maze and to choose difficulty.
-
-**Day 4:** Final styling and bonus features if time.
-
-## Bonus Features
+## Anticipated Features
 
 There are many directions this maze generator could eventually take, including:
 
