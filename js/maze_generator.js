@@ -1,5 +1,5 @@
 // import { drawMaze, animate } from './animate_maze_build';
-import { buttonsListening } from './difficulty';
+// import { buttonsListening } from './difficulty';
 import Game from './game';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,6 +12,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const defaultDifficulty = 10;
   const game = new Game(defaultDifficulty);
   game.setUpGame();
-
-  buttonsListening();
 });
