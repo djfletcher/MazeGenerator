@@ -122,16 +122,17 @@ class Maze {
     return newGrid;
   }
 
-  animateMazeBuild(i) {
+  animateMazeBuild(i, drawRestOfCanvas) {
     // debugger;
     const indices = this.orderBuilt[i];
     const cellSize = this.cellSize;
-    let xStart = cellSize * indices.col;
-    let yStart = cellSize * indices.row;
-    let xEnd, yEnd;
 
     this.ctx.beginPath();
     this.wallsCollection[indices.row][indices.col].forEach(wall => {
+      let xStart = cellSize * indices.col;
+      let yStart = cellSize * indices.row;
+      let xEnd, yEnd;
+      
       switch(wall) {
         case 'n':
         yEnd = yStart;
@@ -165,7 +166,9 @@ class Maze {
     this.drawFinishLine();
 
     if (i < this.difficulty * this.difficulty - 2) {
-      window.requestAnimationFrame(() => this.animateMazeBuild(i + 1));
+      window.requestAnimationFrame(() => this.animateMazeBuild(i + 1, drawRestOfCanvas));
+    } else {
+      drawRestOfCanvas();
     }
   }
 

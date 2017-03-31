@@ -15,19 +15,16 @@ class Game {
     const x = r + 1;
     const y = r + 1;
     this.player = new Player(x, y, r, this.ctx);
-
-    // this.animating = false;
-
-    this.bindKeys();
   }
 
   setUpGame(difficulty) {
-    // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.createMaze();
     this.finishLine = this.maze.finishLine;
     this.player.mazeWalls = this.maze.mapCellsToWalls();
-    this.maze.animateMazeBuild(0);
+    this.maze.animateMazeBuild(0, this.draw.bind(this));
     // this.draw();
+    this.bindKeys();
   }
 
   draw(e, handler) {
