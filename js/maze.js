@@ -27,7 +27,7 @@ class Maze {
   }
 
   createMaze() {
-    this.carvePassagesFrom(0, 0, this.grid);
+    this.carvePassagesFrom(Math.floor(this.difficulty / 2), Math.floor(this.difficulty / 2), this.grid);
   }
 
   // Implementation of the Fisher-Yates Shuffle for randomized directions

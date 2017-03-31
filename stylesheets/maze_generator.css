@@ -21,7 +21,9 @@ canvas {
 h1 {
   font-family: 'Monoton', cursive;
   color: rgb(15, 38, 60);
-  margin: 25px 0 0 0;
+  margin: 25px 0 8px 0;
+  padding: 0 50px 6px 50px;
+  border-bottom: 1px solid gray;
 }
 
 .game-container {
