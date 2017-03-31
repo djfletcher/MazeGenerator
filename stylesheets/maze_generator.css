@@ -66,3 +66,40 @@ h1 {
   color: rgb(171, 70, 67);
   background-color: rgb(15, 38, 60);
 }
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+
+  margin-top: 15px;
+  width: 25%;
+}
+
+.footer-links a {
+  margin: 0 15px;
+  font-size: 16px;
+}
+
+.footer-links img {
+  width: 30px;
+  height: 30px;
+}
+
+.footer-links img:hover {
+  cursor: pointer;
+}
+
+.email-container {
+  position: relative;
+}
+
+#email {
+  display: none;
+  position: absolute;
+  background: white;
+  bottom: 22px;
+  left: -78px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
