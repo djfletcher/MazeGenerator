@@ -6,16 +6,22 @@
     <script src="./js/keymaster.js"></script>
     <script src="./js/bundle.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="./stylesheets/maze_generator.css">
+    <link href="https://fonts.googleapis.com/css?family=Monoton|Righteous" rel="stylesheet">
   </head>
   <body>
     <div id="main">
-      <canvas id="canvas" width="500" height="500"></canvas>
-      <ul class="difficulty-buttons">
-        <li><button id="easy">Easy</button></li>
-        <li><button id="medium">Medium</button></li>
-        <li><button id="hard">Hard</button></li>
-        <li><button id="insane">Insane</button></li>
-      </ul>
+      <div class="header-container">
+        <h1>Random Maze Generator!</h1>
+      </div>
+      <div class="game-container">
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <ul class="difficulty-buttons">
+          <li><button id="easy">Easy</button></li>
+          <li><button id="medium">Medium</button></li>
+          <li><button id="hard">Hard</button></li>
+          <li><button id="insane">Insane</button></li>
+        </ul>
+      </div>
     </div>
   </body>
 </html>

@@ -1,22 +1,45 @@
 #main {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
 }
 
 body {
   background-color: rgb(138, 179, 196);
+  /*background-color: rgb(15, 38, 60);*/
+  /*background: -webkit-radial-gradient(circle, rgb(15, 38, 60), rgb(221, 147, 88));
+  background: -moz-radial-gradient(circle, rgb(15, 38, 60), rgb(221, 147, 88));
+  background: -ms-radial-gradient(circle, rgb(15, 38, 60), rgb(221, 147, 88));*/
 }
 
 canvas {
   background-color: rgb(253, 244, 229);
   margin: 20px;
-  border: 1px solid rgb(176, 171, 166);
+  /*border: 1px solid rgb(176, 171, 166);*/
+}
+
+h1 {
+  font-family: 'Monoton', cursive;
+  color: rgb(15, 38, 60);
+  margin: 25px 0 0 0;
+}
+
+.game-container {
+  display: flex;
+  position: relative;
 }
 
 .difficulty-buttons {
   list-style: none;
   display: flex;
   flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+
+  position: absolute;
+  right: -115px;
+  top: 12px;
 }
 
 .difficulty-buttons > li {
@@ -24,7 +47,20 @@ canvas {
 }
 
 .difficulty-buttons button {
-  width: 100px;
-  height: 30px;
-  border-radius: 4px;
+  width: 115px;
+  height: 35px;
+
+  font-size: 16px;
+  font-family: 'Righteous', cursive;
+  color: rgb(15, 38, 60);
+  background-color: rgb(171, 70, 67);
+
+  border-style: solid;
+  border-radius: 8px;
+}
+
+.difficulty-buttons button:hover {
+  cursor: pointer;
+  color: rgb(171, 70, 67);
+  background-color: rgb(15, 38, 60);
 }
