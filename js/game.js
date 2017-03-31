@@ -49,6 +49,8 @@ class Game {
   }
 
   bindKeys() {
+    // must unbind keys so they stop moving the player in previous games
+    this.unbindKeys();
     window.key('up, down, left, right', this.draw.bind(this));
   }
 
