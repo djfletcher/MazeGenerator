@@ -18,17 +18,17 @@ class Game {
   }
 
   setUpGame(difficulty) {
+    this.unbindKeys();
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.createMaze();
     this.finishLine = this.maze.finishLine;
     this.player.mazeWalls = this.maze.mapCellsToWalls();
-    this.maze.animateMazeBuild(0, this.draw.bind(this));
+    this.maze.animateMazeBuild(0, this.draw.bind(this), this.bindKeys.bind(this));
     // this.draw();
-    this.bindKeys();
+    // this.bindKeys();
   }
 
   draw(e, handler) {
-    // this.unbindKeys();
     if (e) { this.player.moveCircle(e, handler); }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.maze.drawMaze();
@@ -38,6 +38,7 @@ class Game {
       this.unbindKeys();
       window.setTimeout(() => changeDifficulty(this.difficulty), 1000);
     }
+    // debugger;
     // this.bindKeys();
   }
 
