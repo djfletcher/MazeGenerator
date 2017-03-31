@@ -2,6 +2,16 @@ import Player from './player';
 import Maze from './maze';
 import { changeDifficulty } from './difficulty';
 
+
+// NEXT --> if you pass a branching point have the trail leave a node there,
+// just a fatter point that sticks out of the line, and you can hit space to
+// return to your last node.
+
+
+
+
+
+
 class Game {
   constructor(difficulty) {
     this.difficulty = difficulty;
