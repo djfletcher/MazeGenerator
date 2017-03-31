@@ -16,7 +16,7 @@ class Game {
     const y = r + 1;
     this.player = new Player(x, y, r, this.ctx);
 
-    this.animating = false;
+    // this.animating = false;
 
     this.bindKeys();
   }
@@ -26,7 +26,8 @@ class Game {
     this.maze.createMaze();
     this.finishLine = this.maze.finishLine;
     this.player.mazeWalls = this.maze.mapCellsToWalls();
-    this.draw();
+    this.maze.animateMazeBuild(0);
+    // this.draw();
   }
 
   draw(e, handler) {

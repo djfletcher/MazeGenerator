@@ -24,7 +24,7 @@ In addition this project will include:
 
 This app will consist of a single page displaying maze, game controls, and nav links to the site's Github repository, my LinkedIn, and my email. Game controls will simply be the arrow keys to move through the maze. A maze will automatically begin building itself upon loading the page. Once they solve it, there will be buttons to generate another easy, medium, or hard maze, and upon clicking those buttons a new maze will start building itself on the page.
 
-![wireframe](./maze_generator.png)
+![wireframe](./wireframes/maze_generator.png)
 
 ## Architecture and Technologies
 

@@ -12,7 +12,10 @@ class Maze {
     this.finishLineImgLoaded = this.finishLineImg.onload = this.drawFinishLine.bind(this);
     // this.finishLine = undefined;
     // this.spacesMoved = 0;
+    this.orderBuilt = [];
+
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
+    this.animateMazeBuild = this.animateMazeBuild.bind(this);
     this.drawFinishLine = this.drawFinishLine.bind(this);
   }
 
@@ -71,6 +74,7 @@ class Maze {
         grid[cy][cx] = grid[cy][cx] || direction;
         grid[ny][nx] = grid[ny][nx] || opposite[direction];
 
+        this.orderBuilt.push({ row: ny, col: nx });
         // this.finishLine = [ny, nx];
         this.carvePassagesFrom(nx, ny, grid);
         // this.spacesMoved++;
@@ -118,6 +122,53 @@ class Maze {
     return newGrid;
   }
 
+  animateMazeBuild(i) {
+    // debugger;
+    const indices = this.orderBuilt[i];
+    const cellSize = this.cellSize;
+    let xStart = cellSize * indices.col;
+    let yStart = cellSize * indices.row;
+    let xEnd, yEnd;
+
+    this.ctx.beginPath();
+    this.wallsCollection[indices.row][indices.col].forEach(wall => {
+      switch(wall) {
+        case 'n':
+        yEnd = yStart;
+        xEnd = xStart + cellSize;
+        break;
+        case 's':
+        yStart += cellSize;
+
+        yEnd = yStart;
+        xEnd = xStart + cellSize;
+        break;
+        case 'w':
+        xEnd = xStart;
+        yEnd = yStart + cellSize;
+        break;
+        case 'e':
+        xStart += cellSize;
+
+        xEnd = xStart;
+        yEnd = yStart + cellSize;
+        break;
+      }
+
+      this.ctx.moveTo(xStart, yStart);
+      this.ctx.lineTo(xEnd, yEnd);
+    });
+
+    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = 'rgb(65, 67, 82)';
+    this.ctx.stroke();
+    this.drawFinishLine();
+
+    if (i < this.difficulty * this.difficulty - 2) {
+      window.requestAnimationFrame(() => this.animateMazeBuild(i + 1));
+    }
+  }
+
   // Draws the maze in canvas
   drawMaze() {
     const cellSize = this.cellSize;
@@ -129,9 +180,6 @@ class Maze {
     this.wallsCollection.forEach((row, rowIdx) => {
       row.forEach((cell, colIdx) => {
         cell.forEach(wall => {
-          let vertical;
-          let horizontal;
-
           xStart = cellSize * colIdx;
           yStart = cellSize * rowIdx;
 
