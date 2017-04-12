@@ -44,6 +44,7 @@ h1 {
 }
 
 .difficulty-buttons button {
+  position: relative;
   width: 115px;
   height: 35px;
 
@@ -54,12 +55,16 @@ h1 {
 
   border-style: solid;
   border-radius: 8px;
+  box-shadow: 3px 3px black;
 }
 
 .difficulty-buttons button:hover {
   cursor: pointer;
   color: rgb(171, 70, 67);
   background-color: rgb(15, 38, 60);
+  box-shadow: 1px 1px black;
+  top: 2px;
+  left: 2px;
 }
 
 .difficulty-buttons button.disabled {
@@ -69,6 +74,9 @@ h1 {
 .difficulty-buttons button.disabled:hover {
   cursor: default;
   color: rgb(15, 38, 60);
+  box-shadow: 3px 3px black;
+  top: 0;
+  left: 0;
 }
 
 .controls-container {
@@ -81,7 +89,7 @@ h1 {
 }
 
 .controls-container h1 {
-  font-size: 16px;
+  font-size: 18px;
   font-family: 'Righteous', cursive;
   color: rgb(15, 38, 60);
 

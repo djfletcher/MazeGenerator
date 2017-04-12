@@ -2,13 +2,15 @@
 
 [Random Maze Generator](https://djfletcher.github.io/MazeGenerator/) is an interactive algorithm visualizer. It utilizes a recursive backtracking algorithm to generate random, solvable mazes that draw themselves as they are built. Once the maze build is complete, it becomes interactive and playable in the browser.
 
+![Maze](./images/maze.png)
+
 ## Features
 
 #### Maze Generating Algorithm
 
 The recursive backtracking algorithm starts with a two dimensional grid of empty cells. The algorithm is provided a starting cell in the grid, and kicks off by breaking through a random wall (north, south, east, or west) into a neighboring cell that has not yet been visited, and repeats the process. Each cell stores a reference to the wall that was broken through to get to it. The maze is complete when all cells have been visited.
 
-````
+````javascript
 // The recursive backtracking algorithm
 carvePassagesFrom(cx, cy, grid) {
   // Set up constants to aid with describing the passage directions
