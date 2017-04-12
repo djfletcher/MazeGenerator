@@ -69,4 +69,4 @@ The Keymaster.js library was leveraged to map arrow keys to directional input.
 There are many directions this maze generator could eventually take, including:
 
 + Once the user solves the maze, it unravels into a <a href="https://bl.ocks.org/mbostock/061b3929ba0f3964d335" target="_blank">tidy tree layout</a>.
-+ After the user watched the maze being built the page goes dark and then they have them solve it using echolocation.
++ Each time the player passes a fork in the maze the trail will leave a node behind, symbolized by a red dot. The player may hit spacebar to return to the last node if they chose the wrong direction.
