@@ -10,8 +10,6 @@ class Maze {
     this.finishLineImg = new Image();
     this.finishLineImg.src = 'images/star.png';
     this.finishLineImgLoaded = this.finishLineImg.onload = this.drawFinishLine.bind(this);
-    // this.finishLine = undefined;
-    // this.spacesMoved = 0;
     this.orderBuilt = [];
 
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
@@ -118,9 +116,7 @@ class Maze {
     return newGrid;
   }
 
-  // animateMazeBuild(i, drawRestOfCanvas, bindKeys, checkIfNewMazeTriggered) {
   animateMazeBuild(i, drawRestOfCanvas, bindKeys, activateDifficultyButtons) {
-    // debugger;
     const indices = this.orderBuilt[i];
     const cellSize = this.cellSize;
 
@@ -162,10 +158,6 @@ class Maze {
     this.ctx.stroke();
     this.drawFinishLine();
 
-    // if (checkIfNewMazeTriggered()) {
-      // debugger;
-      // bindKeys();
-      // return;
     if (i < this.difficulty * this.difficulty - 2) {
       window.requestAnimationFrame(
         () => this.animateMazeBuild(
@@ -231,8 +223,6 @@ class Maze {
   }
 
   drawFinishLine() {
-    // star.crossOrigin = 'anonymous';
-    // debugger;
     this.ctx.drawImage(
       this.finishLineImg,
       this.finishLine.col * this.cellSize,

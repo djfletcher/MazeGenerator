@@ -11,8 +11,6 @@ class Game {
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
 
-    // this.newMazeTriggered = false;
-    // this.activateDifficultyButtons();
     this.easy = document.getElementById("easy");
     this.medium = document.getElementById("medium");
     this.hard = document.getElementById("hard");
@@ -44,8 +42,6 @@ class Game {
       this.bindKeys.bind(this),
       this.activateDifficultyButtons.bind(this)
     );
-
-    // this.newMazeTriggered = false;
   }
 
   draw(e, handler) {
@@ -75,10 +71,6 @@ class Game {
   unbindKeys() {
     window.key.unbind('up, down, left, right');
   }
-
-  // checkIfNewMazeTriggered() {
-    // return this.newMazeTriggered;
-  // }
 
   activateDifficultyButtons() {
     this.easyListener = () => this.setUpGame(5);

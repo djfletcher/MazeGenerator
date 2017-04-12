@@ -39,11 +39,6 @@ class Player {
   moveCircle(e, handler) {
     const movement = this.movements[handler.shortcut];
     if (this.validNextMove(movement)) {
-      // const nx = this.x + movement.dx;
-      // const ny = this.y + movement.dy;
-
-      // this.animateMove(nx, ny, movement.dx, movement.dy);
-
       this.x = this.x + movement.dx;
       this.y = this.y + movement.dy;
       this.row = this.row + movement.dRow;
@@ -59,8 +54,6 @@ class Player {
     //move by one pixel per frame in the appropriate dx or dy direction
     if (dx !== 0) { x = dx < 0 ? -1 : 1; }
     if (dy !== 0) { y = dy < 0 ? -1 : 1; }
-    // let x = dx < 0 ? -1 : 1;
-    // let y = dy < 0 ? -1 : 1;
 
     if (Math.abs(nx - this.x) > 0 || Math.abs(ny - this.y) > 0) {
       this.x = this.x + x;

@@ -86,8 +86,6 @@ class Game {
     this.canvas = document.getElementById('canvas');
     this.ctx = this.canvas.getContext('2d');
 
-    // this.newMazeTriggered = false;
-    // this.activateDifficultyButtons();
     this.easy = document.getElementById("easy");
     this.medium = document.getElementById("medium");
     this.hard = document.getElementById("hard");
@@ -119,8 +117,6 @@ class Game {
       this.bindKeys.bind(this),
       this.activateDifficultyButtons.bind(this)
     );
-
-    // this.newMazeTriggered = false;
   }
 
   draw(e, handler) {
@@ -150,10 +146,6 @@ class Game {
   unbindKeys() {
     window.key.unbind('up, down, left, right');
   }
-
-  // checkIfNewMazeTriggered() {
-    // return this.newMazeTriggered;
-  // }
 
   activateDifficultyButtons() {
     this.easyListener = () => this.setUpGame(5);
@@ -205,8 +197,6 @@ class Maze {
     this.finishLineImg = new Image();
     this.finishLineImg.src = 'images/star.png';
     this.finishLineImgLoaded = this.finishLineImg.onload = this.drawFinishLine.bind(this);
-    // this.finishLine = undefined;
-    // this.spacesMoved = 0;
     this.orderBuilt = [];
 
     this.carvePassagesFrom = this.carvePassagesFrom.bind(this);
@@ -313,9 +303,7 @@ class Maze {
     return newGrid;
   }
 
-  // animateMazeBuild(i, drawRestOfCanvas, bindKeys, checkIfNewMazeTriggered) {
   animateMazeBuild(i, drawRestOfCanvas, bindKeys, activateDifficultyButtons) {
-    // debugger;
     const indices = this.orderBuilt[i];
     const cellSize = this.cellSize;
 
@@ -357,10 +345,6 @@ class Maze {
     this.ctx.stroke();
     this.drawFinishLine();
 
-    // if (checkIfNewMazeTriggered()) {
-      // debugger;
-      // bindKeys();
-      // return;
     if (i < this.difficulty * this.difficulty - 2) {
       window.requestAnimationFrame(
         () => this.animateMazeBuild(
@@ -426,8 +410,6 @@ class Maze {
   }
 
   drawFinishLine() {
-    // star.crossOrigin = 'anonymous';
-    // debugger;
     this.ctx.drawImage(
       this.finishLineImg,
       this.finishLine.col * this.cellSize,
@@ -508,11 +490,6 @@ class Player {
   moveCircle(e, handler) {
     const movement = this.movements[handler.shortcut];
     if (this.validNextMove(movement)) {
-      // const nx = this.x + movement.dx;
-      // const ny = this.y + movement.dy;
-
-      // this.animateMove(nx, ny, movement.dx, movement.dy);
-
       this.x = this.x + movement.dx;
       this.y = this.y + movement.dy;
       this.row = this.row + movement.dRow;
@@ -528,8 +505,6 @@ class Player {
     //move by one pixel per frame in the appropriate dx or dy direction
     if (dx !== 0) { x = dx < 0 ? -1 : 1; }
     if (dy !== 0) { y = dy < 0 ? -1 : 1; }
-    // let x = dx < 0 ? -1 : 1;
-    // let y = dy < 0 ? -1 : 1;
 
     if (Math.abs(nx - this.x) > 0 || Math.abs(ny - this.y) > 0) {
       this.x = this.x + x;
