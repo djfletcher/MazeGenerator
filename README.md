@@ -2,7 +2,7 @@
 
 [Random Maze Generator](https://djfletcher.github.io/MazeGenerator/) is an interactive algorithm visualizer. It utilizes a recursive backtracking algorithm to generate random, solvable mazes that draw themselves as they are built. Once the maze build is complete, it becomes interactive and playable in the browser.
 
-![Maze](./images/maze.png)
+![Maze](./images/maze.gif)
 
 ## Features
 
